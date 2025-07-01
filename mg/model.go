@@ -12,6 +12,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
+type Rtp string
+
+const (
+	WeeklyRtp  Rtp = "weekly"
+	MonthlyRtp Rtp = "monthly"
+	TotalRtp   Rtp = "total"
+)
+
 // only record each day RTP , and compute total RTP on each day 00:00 and store it to redis
 type RoomDailyRtp struct {
 	ID     primitive.ObjectID
@@ -21,23 +29,7 @@ type RoomDailyRtp struct {
 	Score  uint64
 }
 
-type RoomWeeklyRtp struct {
-	ID     primitive.ObjectID
-	GameID primitive.ObjectID
-	Type   string
-	Bet    uint64
-	Score  uint64
-}
-
-type RoomMonthlyRtp struct {
-	ID     primitive.ObjectID
-	GameID primitive.ObjectID
-	Type   string
-	Bet    uint64
-	Score  uint64
-}
-
-type RoomTotalRtp struct {
+type RoomRtp struct {
 	ID     primitive.ObjectID
 	GameID primitive.ObjectID
 	Type   string
@@ -47,25 +39,12 @@ type RoomTotalRtp struct {
 
 type GameDailyRtp struct {
 	ID    primitive.ObjectID
+	Date  time.Time `bson:"date"`
 	Bet   uint64
 	Score uint64
 }
 
-type GameWeeklyRtp struct {
-	ID    primitive.ObjectID
-	Type  string
-	Bet   uint64
-	Score uint64
-}
-
-type GameMonthlyRtp struct {
-	ID    primitive.ObjectID
-	Type  string
-	Bet   uint64
-	Score uint64
-}
-
-type GameTotalRtp struct {
+type GameRtp struct {
 	ID    primitive.ObjectID
 	Type  string
 	Bet   uint64
